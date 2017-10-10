@@ -39,7 +39,7 @@ def gradient(weights, features, labels):
     elementError = error.T.dot(features)
     return elementError
 
-def costFunction(weights, features, labels, threshold = 0.5):
+def costFunction(weights, features, labels, threshold = 0.3):
     m = features.shape[0]
     predictions = predict(weights, features)
     cost = 0
@@ -94,6 +94,9 @@ data.dropna(subset=['HndWshQual', 'Risk', 'KnowlTrans', 'Gender', 'Flu'], inplac
 #Normalize HndWshQual Data
 data['HndWshQual'] = (data['HndWshQual'] - np.mean(data['HndWshQual'] / np.std(data['HndWshQual'])))
 
+# Shuffle Data
+data.reindex(np.random.permutation(data.index))
+
 
 ####### EVALUATE RISK ONLY MODEL ########
 dataLen = data.shape[0]
@@ -142,6 +145,7 @@ print('True Positive', tp)
 print('True Negative', tn)
 print('False Positive', fp)
 print('False Negative', fn)
+print("Weights", weights)
 print("\n\n")
 
 ######## EVALUATE RISK, HAND WASH QUALITY, AND KNOWLEDGE OF TRANS MODEL #######
